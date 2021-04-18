@@ -1,62 +1,78 @@
 'use strict';
 
-let rightImg =document.getElementById('right-image');
-let middleImg =document.getElementById('middle-image');
-let leftImg =document.getElementById('left-image');
-
-let clickedTimes=0;
-let allProducts=[];
-let roundsNumber=25;
-let rightIndex;
-let middleIndex;
+//Gkobal Values
+let leftImage = document.getElementById('left-image');
+let middleImage = document.getElementById('middle-image');
+let rightImage = document.getElementById('right-image');
+let roundsCount = 0;
+let roundsMax = 25;
 let leftIndex;
+let middleIndex;
+let rightIndex;
+let allImage = [];
 
-function Product(name,source,shownTimes,clickedTimes){
-this.name=name;
-this.source=source;
-this.shownTimes=shownTimes;
-this.clickedTimes=clickedTimes;
-allProducts.push(this);
+
+// Constructor Function
+function Products(name, source) {
+  this.name = name;
+  this.source = source;
+  this.views = 0;
+  this.votes = 0;
+  allImage.push(this);
 }
 
-new Product = ('bag','../Images/bag.jpg');
-new Product = ('banana','../Images/banana.jpg');
-new Product = ('bathroom','../Images/bathroom.jpg');
-new Product = ('boots','../Images/boots.jpg');
-new Product = ('breakfast','../Images/breakfast.jpg');
-new Product = ('bubblegum','../Images/bubblegum.jpg');
-new Product = ('chair','../Images/chair.jpg');
-new Product = ('cthulhu','../Images/cthulhu.jpg');
-new Product = ('dog-duck','../Images/dog-duck.jpg');
-new Product = ('dragon','../Images/dragon.jpg');
-new Product = ('pen','../Images/pen.jpg');
-new Product = ('pet-sweep','../Images/pet-sweep.jpg');
-new Product = ('scissors','../Images/scissors.jpg');
-new Product = ('shark','../Images/shark.jpg');
-new Product = ('sweep','../Images/sweep.png');
-new Product = ('tauntaun','../Images/tauntaun.jpg');
-new Product = ('unicorn','../Images/unicorn.jpg');
-new Product = ('usb','../Images/usb.gif');
-new Product = ('water-can','../Images/water-can.jpg');
-new Product = ('wine-glass','../Images/wine-glass.jpg');
+
+function objects() {
+  new Products('bag', '..//img/bag.jpg');
+  new Products('banana', '..//img/banana.jpg');
+  new Products('bathroom', '..//img/bathroom.jpg');
+  new Products('boots', '..//img/boots.jpg');
+  new Products('breakfast', '..//img/breakfast.jpg');
+  new Products('bubblegum', '..//img/bubblegum.jpg');
+  new Products('chair', '..//img/chair.jpg');
+  new Products('cthulhu', '..//img/cthulhu.jpg');
+  new Products('dog-duck', '..//img/dog-duck.jpg');
+  new Products('dragon', '..//img/dragon.jpg');
+  new Products('pen', '..//img/pen.jpg');
+  new Products('pet-sweep', '..//img/pet-sweep.jpg');
+  new Products('scissors', '..//img/scissors.jpg');
+  new Products('shark', '..//img/shark.jpg');
+  new Products('sweep', '..//img/sweep.png');
+  new Products('unicorn', '..//img/unicorn.jpg');
+  new Products('usb', '..//img/usb.gif');
+  new Products('water-can', '..//img/water-can.jpg');
+  new Products('tauntaun', '..//img/tauntaun.jpg');
+  new Products('wine-glass', '..//img/wine-glass.jpg');
+}
+objects();
 
 
-function genrateRandomIndex(){
-  return Math.floor(Math.random() * Product.allProducts.length); 
+
+// Random function
+function generateIndex() {
+  return Math.floor(Math.random() * allImage.length);
 }
 
-function renderThreeImages(){
-  rightIndex = genrateRandomIndex();
-  middleIndex = genrateRandomIndex();
-  leftIndex = genrateRandomIndex();
-  while ((rightIndex===middleIndex) || (rightIndex===leftIndex) || (middleIndex===leftIndex)){
-    rightIndex=genrateRandomIndex();
-    middleIndex=genrateRandomIndex();
+
+// Images
+function renderImg() {
+  leftIndex = generateIndex();
+  middleIndex = generateIndex();
+  rightIndex = generateIndex();
+
+  while (leftIndex === rightIndex || leftIndex === middleIndex || rightIndex === middleIndex) {
+    rightIndex = generateIndex();
+    middleIndex = generateIndex();
   }
-  rightImg.setAttribute.src=Product.allProducts[rightIndex].source;
-  middleImg.src=Product.allProducts[middleImg];
-  leftImg.src=Product.allProducts[rightIndex];
+  allImage[leftIndex].views += 1;
+  allImage[middleIndex].views += 1;
+  allImage[rightIndex].views += 1;
+
+  leftImage.setAttribute('src', allImage[leftIndex].source);
+  middleImage.setAttribute('src', allImage[middleIndex].source);
+  rightImage.setAttribute('src', allImage[rightIndex].source);
+
 }
-renderThreeImages();
+renderImg();
 
 
