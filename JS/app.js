@@ -76,16 +76,6 @@ function renderImg() {
 renderImg();
 
 
-// function openList1() {
-//   let list = document.getElementById('list');
-
-//   if (list.style.display == 'none'){
-//     list.style.display = 'block';
-//   }else{
-//     list.style.display = 'none';
-//   }
-// }
-
 
 // Votes counting and remove event
 leftImage.addEventListener('click', handleClicking);
@@ -115,8 +105,17 @@ function handleClicking(event) {
     leftImage.removeEventListener('click', handleClicking);
     middleImage.removeEventListener('click', handleClicking);
     rightImage.removeEventListener('click', handleClicking);
-  }
-}
+  }}
 
 
 
+// let ul = document.getElementById('list');
+
+// function openList1(){
+//   for (let i = 0; i < allImages.length; i++) {
+//     let li = document.createElement('li');
+//     ul.appendChild(li);
+//     li.textContent = `${allImages[i].name} was seen ${allImages[i].views} times had ${allImages[i].votes} votes.`;
+//   }
+// }
+// openList1();
