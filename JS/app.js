@@ -1,6 +1,6 @@
 'use strict';
 
-//Gkobal Values
+//Global Values
 let leftImage = document.getElementById('left-image');
 let middleImage = document.getElementById('middle-image');
 let rightImage = document.getElementById('right-image');
@@ -9,7 +9,7 @@ let roundsMax = 25;
 let leftIndex;
 let middleIndex;
 let rightIndex;
-let allImage = [];
+let allImages = [];
 
 
 // Constructor Function
@@ -18,7 +18,7 @@ function Products(name, source) {
   this.source = source;
   this.views = 0;
   this.votes = 0;
-  allImage.push(this);
+  allImages.push(this);
 }
 
 
@@ -50,11 +50,11 @@ objects();
 
 // Random function
 function generateIndex() {
-  return Math.floor(Math.random() * allImage.length);
+  return Math.floor(Math.random() * allImages.length);
 }
 
 
-// Images
+// Images and count the views
 function renderImg() {
   leftIndex = generateIndex();
   middleIndex = generateIndex();
@@ -64,15 +64,48 @@ function renderImg() {
     rightIndex = generateIndex();
     middleIndex = generateIndex();
   }
-  allImage[leftIndex].views += 1;
-  allImage[middleIndex].views += 1;
-  allImage[rightIndex].views += 1;
+  allImages[leftIndex].views += 1;
+  allImages[middleIndex].views += 1;
+  allImages[rightIndex].views += 1;
 
-  leftImage.setAttribute('src', allImage[leftIndex].source);
-  middleImage.setAttribute('src', allImage[middleIndex].source);
-  rightImage.setAttribute('src', allImage[rightIndex].source);
+  leftImage.setAttribute('src', allImages[leftIndex].source);
+  middleImage.setAttribute('src', allImages[middleIndex].source);
+  rightImage.setAttribute('src', allImages[rightIndex].source);
 
 }
 renderImg();
 
+
+
+// Votes counting and remove event
+leftImage.addEventListener('click', handleClicking);
+middleImage.addEventListener('click', handleClicking);
+rightImage.addEventListener('click', handleClicking);
+
+function handleClicking(event) {
+  roundsCount++;
+
+  if (roundsMax > roundsCount) {
+    if (event.target.id === 'left-image') {
+      allImages[leftIndex].votes++;
+    } else if (event.target.id === 'middle-image') {
+      allImages[middleIndex].votes++;
+    } else {
+      allImages[rightIndex].votes++;
+    }
+    renderImg();
+
+  } else {
+    let ul = document.getElementById('list');
+    for (let i = 0; i < allImages.length; i++) {
+      let li = document.createElement('li');
+      ul.appendChild(li);
+      li.textContent = `The ${allImages[i].name} has been shown ${allImages[i].views} times and has been selected${allImages[i].votes} times.`;
+    }
+    leftImage.removeEventListener('click', handleClicking);
+    middleImage.removeEventListener('click', handleClicking);
+    rightImage.removeEventListener('click', handleClicking);
+
+  }
+}
 
