@@ -96,26 +96,27 @@ function handleClicking(event) {
     renderImg();
 
   } else {
-    let ul = document.getElementById('list');
-    for (let i = 0; i < allImages.length; i++) {
-      let li = document.createElement('li');
-      ul.appendChild(li);
-      li.textContent = `${allImages[i].name} was seen ${allImages[i].views} times had ${allImages[i].votes} votes.`;
-    }
+    // renderList();
     leftImage.removeEventListener('click', handleClicking);
     middleImage.removeEventListener('click', handleClicking);
     rightImage.removeEventListener('click', handleClicking);
   }}
 
 
+// Button to show image
+let button = document.getElementById('btn');
+button.addEventListener('click',showingList);
+function showingList(){
+  renderList();
+  button.removeEventListener('click',showingList);
+}
 
-// let ul = document.getElementById('list');
 
-// function openList1(){
-//   for (let i = 0; i < allImages.length; i++) {
-//     let li = document.createElement('li');
-//     ul.appendChild(li);
-//     li.textContent = `${allImages[i].name} was seen ${allImages[i].views} times had ${allImages[i].votes} votes.`;
-//   }
-// }
-// openList1();
+// List
+function renderList (){
+  let ul = document.getElementById('list');
+  for (let i = 0; i < allImages.length; i++) {
+    let li = document.createElement('li');
+    ul.appendChild(li);
+    li.textContent = `${allImages[i].name} was seen ${allImages[i].views} times had ${allImages[i].votes} votes.`;
+  }}

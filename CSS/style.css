@@ -34,14 +34,13 @@ img {
 }
 
 button{
-  margin: 2% 40%;
+  margin: 2% 44%;
   text-align: center;
   padding: 1em;
-}
-
-button a {
-  text-decoration: none;
   font-size: larger;
   font-weight: bold;
-
 }
+button:hover{
+  background-color:lightsalmon;
+} 
+
