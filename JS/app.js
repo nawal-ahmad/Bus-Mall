@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 
 'use strict';
 
@@ -26,8 +27,8 @@ function Products(name, source) {
   arrOfNames.push(this.name);
 }
 
-console.log(allImages);
-
+// console.log(allImages);
+Products.allImages=[];
 
 new Products('bag', '..//img/bag.jpg');
 new Products('banana', '..//img/banana.jpg');
@@ -66,20 +67,18 @@ function renderImg() {
   let arrIndex=[];
   while (leftIndex === middleIndex || leftIndex === rightIndex || rightIndex === middleIndex || arrIndex.includes(leftIndex) || arrIndex.includes(middleIndex) || arrIndex.includes(rightIndex)) {
     leftIndex=generateIndex();
+    middleIndex=generateIndex();
     rightIndex = generateIndex();
-    middleIndex = generateIndex();
   }
-  arrIndex[0](leftIndex);
-  arrIndex[1]=middleIndex;
-  arrIndex[2]=rightIndex;
+  arrIndex=[leftIndex,middleIndex,rightIndex];
 
-  allImages[leftIndex].views += 1;
-  allImages[middleIndex].views += 1;
-  allImages[rightIndex].views += 1;
-
+  // leftImage.src=Products.allImages[leftIndex].source;
   leftImage.setAttribute('src', allImages[leftIndex].source);
+  allImages[leftIndex].views += 1;
   middleImage.setAttribute('src', allImages[middleIndex].source);
+  allImages[middleIndex].views += 1;
   rightImage.setAttribute('src', allImages[rightIndex].source);
+  allImages[rightIndex].views += 1;
 }
 renderImg();
 
@@ -97,13 +96,18 @@ function handleClicking(event) {
       allImages[leftIndex].votes++;
     } else if (event.target.id === 'middle-image') {
       allImages[middleIndex].votes++;
-    } else {
+    } else if((event.target.id === 'right-image')){
       allImages[rightIndex].votes++;
     }
+    else {
+      alert('Please click on one of the products!');
+      roundsCount--;
+    }
     renderImg();
-
-  } else {
-    // renderList();
+    console.log(Products.allImages);
+  }
+  else {
+    renderList();
     chart();
     leftImage.removeEventListener('click', handleClicking);
     middleImage.removeEventListener('click', handleClicking);
@@ -125,18 +129,22 @@ function handleClicking(event) {
 function renderList() {
   let ul = document.getElementById('list');
   for (let i = 0; i < allImages.length; i++) {
-    arrOfVotes.push(Products.allImages[i].votes);
-    arrOfShown.push(Products.allImages[i].views);
+    arrOfVotes.push(allImages[i].votes);
+    arrOfShown.push(allImages[i].views);
+    console.log(arrOfShown);
+    console.log(arrOfVotes);
     let li = document.createElement('li');
     ul.appendChild(li);
-    li.textContent = `${allImages[i].name} was seen ${allImages[i].views} times had ${allImages[i].votes} votes.`;
+    // li.textContent = `${allImages[i].name} was seen ${allImages[i].views} times had ${allImages[i].votes} votes.`;
   }
+  console.log(Products.allImages);
 }
-renderList();
+
 
 
 function chart() {
   let ctx = document.getElementById('myChart');
+  // eslint-disable-next-line no-undef
   let myChart = new Chart(ctx, {
     type: 'bar',
     data: {
@@ -159,3 +167,30 @@ function chart() {
     }
   });
 }
+
+// function chartA() {
+//   let ctx = document.getElementById('myChart');
+//   // eslint-disable-next-line no-undef
+//   let myChart = new Chart(ctx, {
+//     type: 'doughnut',
+//     data: {
+//       labels: arrOfNames,
+//       datasets: [{
+//         label: 'Number Of votes',
+//         data: arrOfVotes,
+//         backgroundColor: [
+//           'rgba(255, 99, 132, 0.2)',
+//         ],
+//         borderWidth: 1
+//       }, {
+//         label: 'Number of Shown',
+//         data: arrOfShown,
+//         backgroundColor: [
+//           'rgb(192,192,192)'
+//         ],
+//         borderWidth: 1
+//       }]
+//     }
+//   });
+// }
+
