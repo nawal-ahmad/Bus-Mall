@@ -104,7 +104,6 @@ function handleClicking(event) {
       roundsCount--;
     }
     renderImg();
-    console.log(Products.allImages);
   }
   else {
     renderList();
@@ -131,13 +130,12 @@ function renderList() {
   for (let i = 0; i < allImages.length; i++) {
     arrOfVotes.push(allImages[i].votes);
     arrOfShown.push(allImages[i].views);
-    console.log(arrOfShown);
-    console.log(arrOfVotes);
+    // console.log(arrOfShown);
+    // console.log(arrOfVotes);
     let li = document.createElement('li');
     ul.appendChild(li);
     // li.textContent = `${allImages[i].name} was seen ${allImages[i].views} times had ${allImages[i].votes} votes.`;
   }
-  console.log(Products.allImages);
 }
 
 
