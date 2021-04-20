@@ -61,9 +61,9 @@ function generateIndex() {
 
 let arrIndex=[];
 
-
 // Images and count the views / avoid repeating images in the same time and next
 function renderImg() {
+  // console.log('before '+arrIndex);
   leftIndex = generateIndex();
   middleIndex = generateIndex();
   rightIndex = generateIndex();
@@ -75,6 +75,7 @@ function renderImg() {
   arrIndex=[leftIndex,middleIndex,rightIndex];
 
 
+
   // leftImage.src=Products.allImages[leftIndex].source;
   leftImage.setAttribute('src', allImages[leftIndex].source);
   allImages[leftIndex].views ++;
@@ -83,7 +84,6 @@ function renderImg() {
   rightImage.setAttribute('src', allImages[rightIndex].source);
   allImages[rightIndex].views ++;
 }
-renderImg();
 
 
 getData();
@@ -109,6 +109,7 @@ function handleClicking(event) {
   }
   else {
     chart();
+    chartA();
     leftImage.removeEventListener('click', handleClicking);
     middleImage.removeEventListener('click', handleClicking);
     rightImage.removeEventListener('click', handleClicking);
@@ -167,4 +168,5 @@ function chart() {
     }
   });
 }
+renderImg();
 
