@@ -60,6 +60,7 @@ function generateIndex() {
 
 
 let arrIndex=[];
+
 // Images and count the views / avoid repeating images in the same time and next
 function renderImg() {
   // console.log('before '+arrIndex);
@@ -73,26 +74,25 @@ function renderImg() {
   }
   arrIndex=[leftIndex,middleIndex,rightIndex];
 
-  // console.log('after '+arrIndex);
+
 
   // leftImage.src=Products.allImages[leftIndex].source;
   leftImage.setAttribute('src', allImages[leftIndex].source);
-  allImages[leftIndex].views += 1;
+  allImages[leftIndex].views ++;
   middleImage.setAttribute('src', allImages[middleIndex].source);
-  allImages[middleIndex].views += 1;
+  allImages[middleIndex].views ++;
   rightImage.setAttribute('src', allImages[rightIndex].source);
-  allImages[rightIndex].views += 1;
+  allImages[rightIndex].views ++;
 }
 
 
+getData();
 // Votes counting and remove event
 leftImage.addEventListener('click', handleClicking);
 middleImage.addEventListener('click', handleClicking);
 rightImage.addEventListener('click', handleClicking);
-
 function handleClicking(event) {
   roundsCount++;
-
   if (roundsMax > roundsCount) {
     if (event.target.id === 'left-image') {
       allImages[leftIndex].votes++;
@@ -103,12 +103,11 @@ function handleClicking(event) {
     }
     else {
       alert('Please click on one of the products!');
-      roundsCount--;
     }
+    saveData();
     renderImg();
   }
   else {
-    renderList();
     chart();
     chartA();
     leftImage.removeEventListener('click', handleClicking);
@@ -117,30 +116,31 @@ function handleClicking(event) {
   }
 }
 
-
-// Button to show image
-// let button = document.getElementById('btn');
-// button.addEventListener('click', showingList);
-// function showingList() {
-//   renderList();
-//   button.removeEventListener('click', showingList);
-// }
-
-
 // List
 function renderList() {
   let ul = document.getElementById('list');
   for (let i = 0; i < allImages.length; i++) {
     arrOfVotes.push(allImages[i].votes);
     arrOfShown.push(allImages[i].views);
-    // console.log(arrOfShown);
-    // console.log(arrOfVotes);
     let li = document.createElement('li');
     ul.appendChild(li);
-    // li.textContent = `${allImages[i].name} was seen ${allImages[i].views} times had ${allImages[i].votes} votes.`;
+    li.textContent = `${allImages[i].name} was seen ${allImages[i].views} times had ${allImages[i].votes} votes.`;
   }
 }
 
+
+function saveData(){
+  let dataArr=JSON.stringify(allImages);
+  localStorage.setItem('product', dataArr);
+}
+
+function getData(){
+  let data = JSON.parse(localStorage.getItem('product'));
+  if (data !== null){
+    allImages=data;
+  }
+  renderList();
+}
 
 
 function chart() {
@@ -169,30 +169,4 @@ function chart() {
   });
 }
 renderImg();
-
-// function chartA() {
-//   let ctx = document.getElementById('myChart');
-//   // eslint-disable-next-line no-undef
-//   let myChart = new Chart(ctx, {
-//     type: 'doughnut',
-//     data: {
-//       labels: arrOfNames,
-//       datasets: [{
-//         label: 'Number Of votes',
-//         data: arrOfVotes,
-//         backgroundColor: [
-//           'rgba(255, 99, 132, 0.2)',
-//         ],
-//         borderWidth: 1
-//       }, {
-//         label: 'Number of Shown',
-//         data: arrOfShown,
-//         backgroundColor: [
-//           'rgb(192,192,192)'
-//         ],
-//         borderWidth: 1
-//       }]
-//     }
-//   });
-// }
 
