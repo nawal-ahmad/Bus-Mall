@@ -59,18 +59,21 @@ function generateIndex() {
 }
 
 
-// Images and count the views
+let arrIndex=[];
+// Images and count the views / avoid repeating images in the same time and next
 function renderImg() {
+  // console.log('before '+arrIndex);
   leftIndex = generateIndex();
   middleIndex = generateIndex();
   rightIndex = generateIndex();
-  let arrIndex=[];
   while (leftIndex === middleIndex || leftIndex === rightIndex || rightIndex === middleIndex || arrIndex.includes(leftIndex) || arrIndex.includes(middleIndex) || arrIndex.includes(rightIndex)) {
     leftIndex=generateIndex();
     middleIndex=generateIndex();
     rightIndex = generateIndex();
   }
   arrIndex=[leftIndex,middleIndex,rightIndex];
+
+  // console.log('after '+arrIndex);
 
   // leftImage.src=Products.allImages[leftIndex].source;
   leftImage.setAttribute('src', allImages[leftIndex].source);
@@ -80,7 +83,6 @@ function renderImg() {
   rightImage.setAttribute('src', allImages[rightIndex].source);
   allImages[rightIndex].views += 1;
 }
-renderImg();
 
 
 // Votes counting and remove event
@@ -108,6 +110,7 @@ function handleClicking(event) {
   else {
     renderList();
     chart();
+    chartA();
     leftImage.removeEventListener('click', handleClicking);
     middleImage.removeEventListener('click', handleClicking);
     rightImage.removeEventListener('click', handleClicking);
@@ -165,6 +168,7 @@ function chart() {
     }
   });
 }
+renderImg();
 
 // function chartA() {
 //   let ctx = document.getElementById('myChart');
